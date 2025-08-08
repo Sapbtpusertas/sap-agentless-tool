@@ -1,0 +1,477 @@
+{
+  "landscape_metadata": {
+    "version": "1.0",
+    "generated_at": "2025-08-08T21:49:01.124740Z",
+    "description": "Synthetic but realistic SAP landscape sample (AWS-hosted) for testing the agentless discovery and validator.",
+    "sources": [
+      "simulated",
+      "manual-demo"
+    ]
+  },
+  "systems": [
+    {
+      "sid": "PRD",
+      "name": "S4 Production",
+      "type": "S/4HANA",
+      "environment": "Production",
+      "instances": [
+        {
+          "instance_number": "00",
+          "role": "PAS",
+          "hostname": "prd-pas-00.aws.example.com",
+          "os": "SLES 15 SP4",
+          "start_time": "2025-08-01T03:12:00Z"
+        },
+        {
+          "instance_number": "01",
+          "role": "ASCS",
+          "hostname": "prd-ascs-01.aws.example.com",
+          "os": "SLES 15 SP4",
+          "start_time": "2025-08-01T03:15:00Z"
+        }
+      ],
+      "database": {
+        "db_type": "HANA",
+        "db_version": "2.0 SPS07 (rev 59.07)",
+        "size_gb": 1536,
+        "used_gb": 1200,
+        "last_backup": "2025-08-01T02:30:00Z",
+        "hana_sr_mode": "sync",
+        "backup_catalog": [
+          {
+            "backup_id": "BKP-PRD-20250801-0001",
+            "type": "full",
+            "start_time": "2025-08-01T01:00:00Z",
+            "end_time": "2025-08-01T01:40:00Z",
+            "status": "success"
+          }
+        ]
+      },
+      "transport_queues": [
+        {
+          "transport_id": "K900001",
+          "type": "Workbench",
+          "status": "Released",
+          "source_system": "PRD",
+          "target_systems": [
+            "QAS",
+            "DEV"
+          ]
+        },
+        {
+          "transport_id": "K900002",
+          "type": "Customizing",
+          "status": "Imported",
+          "source_system": "DEV",
+          "target_systems": [
+            "QAS",
+            "PRD"
+          ]
+        }
+      ],
+      "rfc_connections": [
+        {
+          "name": "RFC_TO_SOLMAN",
+          "type": "3",
+          "target_system": "SOL",
+          "auth_method": "SNC",
+          "status": "reachable",
+          "used_by": [
+            "SolMan",
+            "Monitoring"
+          ]
+        },
+        {
+          "name": "RFC_TO_BW",
+          "type": "3",
+          "target_system": "BWH",
+          "auth_method": "USERPWD",
+          "status": "reachable",
+          "used_by": [
+            "DataLoad"
+          ]
+        },
+        {
+          "name": "RFC_EXT_PARTNER",
+          "type": "T",
+          "target_host": "partner.example.com",
+          "auth_method": "CERT",
+          "status": "unreachable",
+          "used_by": [
+            "EDI"
+          ]
+        }
+      ],
+      "sld_entry": {
+        "registered": true,
+        "last_update": "2025-08-07T10:05:00Z",
+        "system_number": "001",
+        "product_version": "S/4HANA 2020 OP",
+        "os": "SLES 15 SP4"
+      },
+      "jobs": [
+        {
+          "job_name": "Z_MONTH_END",
+          "owner": "FIN",
+          "last_runtime": "2025-07-31T23:50:00Z",
+          "status": "Finished",
+          "failure_count": 0
+        },
+        {
+          "job_name": "Z_PAYROLL",
+          "owner": "HR",
+          "last_runtime": "2025-08-01T00:15:00Z",
+          "status": "Failed",
+          "failure_count": 1
+        }
+      ],
+      "certificates": [
+        {
+          "subject": "CN=prd-pas-00.aws.example.com",
+          "issuer": "ExampleCA",
+          "not_before": "2024-09-01T00:00:00Z",
+          "not_after": "2026-09-01T00:00:00Z",
+          "uses": [
+            "HTTPS",
+            "RFC"
+          ],
+          "status": "valid"
+        }
+      ],
+      "notes": "Production S/4HANA cluster in AWS with HANA SR in sync mode"
+    },
+    {
+      "sid": "QAS",
+      "name": "ECC Quality",
+      "type": "ECC",
+      "environment": "Quality",
+      "instances": [
+        {
+          "instance_number": "00",
+          "role": "Central",
+          "hostname": "qas-ci-00.aws.example.com",
+          "os": "RHEL 8",
+          "start_time": "2025-07-28T10:12:00Z"
+        },
+        {
+          "instance_number": "02",
+          "role": "App",
+          "hostname": "qas-app-02.aws.example.com",
+          "os": "RHEL 8",
+          "start_time": "2025-07-28T10:18:00Z"
+        }
+      ],
+      "database": {
+        "db_type": "Oracle",
+        "db_version": "19c",
+        "size_gb": 650,
+        "used_gb": 420,
+        "last_backup": "2025-07-30T03:00:00Z",
+        "backup_catalog": []
+      },
+      "transport_queues": [
+        {
+          "transport_id": "R900101",
+          "type": "Workbench",
+          "status": "Released",
+          "source_system": "DEV",
+          "target_systems": [
+            "QAS",
+            "PRD"
+          ]
+        }
+      ],
+      "rfc_connections": [
+        {
+          "name": "RFC_TO_PRD",
+          "type": "3",
+          "target_system": "PRD",
+          "auth_method": "SNC",
+          "status": "reachable",
+          "used_by": [
+            "ALE"
+          ]
+        }
+      ],
+      "sld_entry": {
+        "registered": true,
+        "last_update": "2025-07-30T14:00:00Z",
+        "system_number": "002",
+        "product_version": "ECC 6.0 EHP8",
+        "os": "RHEL 8"
+      },
+      "jobs": [
+        {
+          "job_name": "Z_QAS_REFRESH",
+          "owner": "Basis",
+          "last_runtime": "2025-07-29T02:00:00Z",
+          "status": "Finished",
+          "failure_count": 0
+        }
+      ],
+      "certificates": [],
+      "notes": "Quality ECC for testing transports and integration"
+    },
+    {
+      "sid": "DEV",
+      "name": "DEV Sandbox",
+      "type": "ECC",
+      "environment": "Development",
+      "instances": [
+        {
+          "instance_number": "00",
+          "role": "DevCentral",
+          "hostname": "dev-ci-00.aws.example.com",
+          "os": "RHEL 8",
+          "start_time": "2025-07-25T08:00:00Z"
+        }
+      ],
+      "database": {
+        "db_type": "HANA",
+        "db_version": "2.0 SPS05",
+        "size_gb": 512,
+        "used_gb": 320,
+        "last_backup": "2025-07-20T01:00:00Z",
+        "backup_catalog": []
+      },
+      "transport_queues": [
+        {
+          "transport_id": "D900201",
+          "type": "Workbench",
+          "status": "Modifiable",
+          "source_system": "DEV",
+          "target_systems": [
+            "QAS"
+          ]
+        }
+      ],
+      "rfc_connections": [
+        {
+          "name": "RFC_TO_QAS",
+          "type": "3",
+          "target_system": "QAS",
+          "auth_method": "USERPWD",
+          "status": "reachable",
+          "used_by": [
+            "CI"
+          ]
+        }
+      ],
+      "sld_entry": {
+        "registered": false,
+        "last_update": null,
+        "system_number": null,
+        "product_version": "ECC 6.0 EHP8",
+        "os": "RHEL 8"
+      },
+      "jobs": [
+        {
+          "job_name": "Z_DEV_BUILD",
+          "owner": "DevOps",
+          "last_runtime": "2025-07-30T12:00:00Z",
+          "status": "Finished",
+          "failure_count": 0
+        }
+      ],
+      "certificates": [],
+      "notes": "Development sandbox - SLD not registered on purpose"
+    },
+    {
+      "sid": "BWH",
+      "name": "BW HANA Analytics",
+      "type": "BW/HANA",
+      "environment": "Production",
+      "instances": [
+        {
+          "instance_number": "00",
+          "role": "Central",
+          "hostname": "bwh-ci-00.aws.example.com",
+          "os": "SLES 15",
+          "start_time": "2025-07-20T11:00:00Z"
+        }
+      ],
+      "database": {
+        "db_type": "HANA",
+        "db_version": "2.0 SPS07",
+        "size_gb": 2048,
+        "used_gb": 1700,
+        "last_backup": "2025-07-29T04:30:00Z",
+        "hana_sr_mode": "async",
+        "backup_catalog": [
+          {
+            "backup_id": "BKP-BWH-20250729-01",
+            "type": "full",
+            "start_time": "2025-07-29T03:00:00Z",
+            "end_time": "2025-07-29T03:55:00Z",
+            "status": "success"
+          }
+        ]
+      },
+      "transport_queues": [],
+      "rfc_connections": [
+        {
+          "name": "RFC_TO_S4",
+          "type": "3",
+          "target_system": "PRD",
+          "auth_method": "SNC",
+          "status": "reachable",
+          "used_by": [
+            "DataTransfer"
+          ]
+        }
+      ],
+      "sld_entry": {
+        "registered": true,
+        "last_update": "2025-07-29T05:00:00Z",
+        "system_number": "004",
+        "product_version": "BW/4HANA 2.0",
+        "os": "SLES 15"
+      },
+      "jobs": [
+        {
+          "job_name": "Z_BW_LOAD",
+          "owner": "ETL",
+          "last_runtime": "2025-07-29T02:00:00Z",
+          "status": "Finished",
+          "failure_count": 0
+        }
+      ],
+      "certificates": [],
+      "notes": "BW system with large data volumes and async SR to DR site"
+    },
+    {
+      "sid": "PO1",
+      "name": "SAP PO Integration",
+      "type": "PO",
+      "environment": "Production",
+      "instances": [
+        {
+          "instance_number": "00",
+          "role": "PO",
+          "hostname": "po1-00.aws.example.com",
+          "os": "RHEL 8",
+          "start_time": "2025-07-18T09:00:00Z"
+        }
+      ],
+      "database": {
+        "db_type": "Postgres",
+        "db_version": "13",
+        "size_gb": 120,
+        "used_gb": 80,
+        "last_backup": "2025-07-28T02:00:00Z",
+        "backup_catalog": []
+      },
+      "transport_queues": [],
+      "rfc_connections": [
+        {
+          "name": "RFC_TO_S4",
+          "type": "3",
+          "target_system": "PRD",
+          "auth_method": "USERPWD",
+          "status": "reachable",
+          "used_by": [
+            "Inbound"
+          ]
+        }
+      ],
+      "sld_entry": {
+        "registered": true,
+        "last_update": "2025-07-18T10:00:00Z",
+        "system_number": "006",
+        "product_version": "SAP PO 7.5",
+        "os": "RHEL 8"
+      },
+      "jobs": [],
+      "certificates": [
+        {
+          "subject": "CN=po1-00.aws.example.com",
+          "issuer": "ExampleCA",
+          "not_before": "2024-07-01T00:00:00Z",
+          "not_after": "2025-07-01T00:00:00Z",
+          "uses": [
+            "HTTPS"
+          ],
+          "status": "expired"
+        }
+      ],
+      "notes": "Integration layer - certificate expired example"
+    },
+    {
+      "sid": "SOL",
+      "name": "Solution Manager",
+      "type": "SolMan",
+      "environment": "Production",
+      "instances": [
+        {
+          "instance_number": "00",
+          "role": "SolMan",
+          "hostname": "sol-00.aws.example.com",
+          "os": "SLES 15",
+          "start_time": "2025-07-01T07:00:00Z"
+        }
+      ],
+      "database": {
+        "db_type": "HANA",
+        "db_version": "2.0 SPS07",
+        "size_gb": 300,
+        "used_gb": 210,
+        "last_backup": "2025-07-31T03:00:00Z",
+        "backup_catalog": []
+      },
+      "transport_queues": [],
+      "rfc_connections": [
+        {
+          "name": "RFC_TO_ALL",
+          "type": "3",
+          "target_system": "*",
+          "auth_method": "SNC",
+          "status": "reachable",
+          "used_by": [
+            "LMDB",
+            "Monitoring"
+          ]
+        }
+      ],
+      "sld_entry": {
+        "registered": true,
+        "last_update": "2025-08-01T11:00:00Z",
+        "system_number": "007",
+        "product_version": "SolMan 7.2 SP15",
+        "os": "SLES 15"
+      },
+      "jobs": [
+        {
+          "job_name": "LMDB_SYNC",
+          "owner": "SolMan",
+          "last_runtime": "2025-08-01T11:05:00Z",
+          "status": "Finished",
+          "failure_count": 0
+        }
+      ],
+      "certificates": [],
+      "notes": "Solution Manager providing LMDB/SLD for the landscape"
+    }
+  ],
+  "connectivity": {
+    "vpc": "vpc-0abc123def",
+    "subnets": [
+      {
+        "name": "app-subnet-a",
+        "az": "us-east-1a",
+        "cidr": "10.0.1.0/24"
+      },
+      {
+        "name": "db-subnet-b",
+        "az": "us-east-1b",
+        "cidr": "10.0.2.0/24"
+      }
+    ],
+    "saprouter": "saprouter.aws.example.com",
+    "links": {
+      "VPN": true,
+      "DirectConnect": false,
+      "Peering": true
+    }
+  },
+  "notes": "This dataset is modular and designed for demo/testing of the Data Collection and Validation pipeline. SIDs are 3 characters per SAP requirement."
+}
